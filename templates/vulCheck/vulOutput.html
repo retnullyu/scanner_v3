@@ -1,0 +1,104 @@
+{% load static from staticfiles %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>漏洞批量探测</title>
+    <link rel="stylesheet" href="{% static "layui/css/layui.css" %}" media="all">
+<style>
+
+
+</style>
+</head>
+
+<body>
+    <div class="layui-tab layui-tab-card" style="margin-top:0px;">
+        <ul class="layui-tab-title">
+            <li class="layui-this"><i class="layui-icon">&#xe68e;</i><span></span>漏洞探测</li>
+        </ul>
+    </div>
+
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+        <legend id="sta">漏洞扫描中<i class="layui-icon layui-anim layui-anim-rotate layui-anim-loop">&#xe63d;</i></legend>
+    </fieldset>
+    <fieldset class="layui-elem-field layui-field-title" >
+        <legend>扫描结果(当前扫描目标:{{objList.IP_URL}})</legend>
+    </fieldset>
+
+    <div class="layui-collapse" id="ipt2">
+        <div class="layui-colla-item">
+          <h2 class="layui-colla-title">{{ objList.IP_URL }}</h2>
+          <div class="layui-colla-content layui-show">
+            <table class="layui-table">
+                <colgroup>
+                <col width="100">
+                <col>
+                </colgroup>
+                <tbody class="info">
+                </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <button class="layui-btn" id="cl" style="margin-top:20px;margin-left:20px;">结束扫描</button>              
+
+
+
+<script src="{% static "layui/layui.js" %}"></script>
+<script>
+    layui.use(['jquery','element','layer'], function() {
+        var $ = layui.jquery,element=layui.element,layer=layui.layer;
+    
+        var url="/vulcheck/vulstart";
+        var IP_URL='{{objList.IP_URL}}';
+        var vul_type='{{objList.vul_type}}';
+        var target='{{objList.target}}';
+        var flag='{{objList.flag}}';
+
+        var data={'IP_URL':IP_URL,'vul_type':vul_type,'target':target,'flag':flag};
+
+        $.post(url,data,function(result){
+            var data = result.data;
+            console.log(data)
+            $(".info").append("<tr><td>"+"检测结果"+"</td><td>"+"漏洞类型"+"</td></tr>");
+            $.each(data,function(n,value) {
+                $(".info").append("<tr><td>"+value.name+"</td><td>"+value.type+"</td></tr>");
+            });
+
+            $('#sta').html("扫描结束<i class='layui-icon'>&#xe618;</i>");
+        });
+
+
+
+
+        // //转为json格式
+        // var messageJson = JSON.stringify(data);
+        // $(document).ready(function() {
+        //     var namespace = "/tools/websocket_port?ipType="+ipType+"&ips="+ips+"&threadSize="+threadSize+"&portType="+portType+"&portNumber="+portNumber+"";
+        //     var socket = new WebSocket("ws://" + window.location.host + namespace);
+        //     socket.onopen = function () {
+        //         console.log('WebSocket open');//成功连接上Websocket
+        //     };
+
+        //     socket.onmessage = function (e) {
+        //         var callback = $.parseJSON(e.data);
+        //         console.log('message: ' + callback.endList);//打印服务端返回的数
+
+        //         if(callback.status=="2"){
+        //             socket.send("ping")
+        //         }
+
+        //         socket.close();//关闭websocket
+        //         console.log('websocket已关闭');
+        //     };
+        //     socket.onclose = function(e){
+        //     console.log('Lose Connection!'+e.code);
+        //      }
+        // });
+    });
+</script>       
+
+</body>
+
+</html>

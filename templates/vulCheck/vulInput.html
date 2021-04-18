@@ -1,0 +1,108 @@
+{% load static from staticfiles %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>漏洞批量扫描</title>
+    <link rel="stylesheet" href="{% static "layui/css/layui.css" %}" media="all">
+<style>
+
+
+</style>
+</head>
+
+<body>
+
+        <div class="layui-tab layui-tab-card" style="margin-top:0px;">
+                <ul class="layui-tab-title">
+                      <li class="layui-this"><i class="layui-icon">&#xe68e;</i><span></span>漏洞批量检测</li>
+                </ul>
+            </div>
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+        <legend>漏洞批量检测</legend>
+    </fieldset>
+    <form class="layui-form" action="/vulcheck/vulcheck_input" method="post">
+              <div class="layui-form-item">
+                <label class="layui-form-label">扫描类型</label>
+                <div class="layui-input-inline">
+                  <select name="vul_type" lay-verify="required" lay-filter="ip">
+                    <option value="service">service</option>
+                    <option value="web">web</option>
+                  </select>
+                </div>
+              </div>
+              <div id="ipval">
+              <div class="layui-form-item">
+                    <label class="layui-form-label">检测目标</label>
+                    <div class="layui-input-block">
+                      <input type="text" name="IP_URL" lay-verify="required" autocomplete="off" placeholder="url or ip" class="layui-input">
+                    </div>
+              </div>
+             </div>
+              <div class="layui-form-item">
+                     <label class="layui-form-label">模糊查询</label>
+                    <div class="layui-input-inline">
+                     <select name="flag" lay-verify="required" lay-filter="kwFlag">
+                     <option value="1">是</option>
+                  <option value="2" selected="selected">否</option>
+                </select>
+            </div>
+                </div>
+              <div class="layui-form-item" id="kwText"></div>
+
+
+            <div class="layui-form-item">
+              <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="sub">开始扫描</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+              </div>
+            </div>
+          </form>               
+    
+                       
+<script src="{% static "layui/layui.js"%}"></script>
+<script>
+    layui.use(['jquery','form'], function() {
+            var $ = layui.jquery,
+            form=layui.form;
+            form.on('select(kwFlag)', function(data){
+            var html =""
+            var html2 ="<label class='layui-form-label'>系统名称</label>"+
+                        "<div class='layui-input-block'>"+
+                            "<textarea placeholder='请输入关键字' name='target' class='layui-textarea'>discuz</textarea>"+
+                        "</div>";
+
+
+            if(data.value==2){
+                $("#kwText").html(html);
+            }else{
+                $("#kwText").html(html2);
+            }
+        });
+
+
+
+            $(".layui-btn-primary").click(function(){
+                $("#portval").html("");
+                var iphtml='<div class="layui-form-item">'+
+                            '<label class="layui-form-label">IP</label>'+
+                            '<div class="layui-input-block">'+
+                            '<input type="text" name="ips" lay-verify="required" autocomplete="off" placeholder="请输入IP" class="layui-input">'+
+                            '</div>'+
+                            '</div>';
+                $("#ipval").html(iphtml);                
+            });
+
+
+            form.on('submit(sub)', function(data){
+                console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
+
+            });
+    });
+
+</script>       
+
+</body>
+
+</html>
