@@ -1,0 +1,248 @@
+{% load static from staticfiles %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>在线解码</title>
+    <link rel="stylesheet" href="{% static "/layui/css/layui.css" %}" media="all">
+    <link rel="stylesheet" href="../../static/js/main.css">
+	<script language="javascript" type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<script data-ad-client="ca-pub-8051389836125315" async="" src="../../static/js/f.txt"></script>
+
+<style>
+
+
+</style>
+</head>
+
+<body>
+	<script src="../../static/js/aes.js"></script>
+	<script src="../../static/js/hmac-md5.js"></script>
+	<script src="../../static/js/hmac-ripemd160.js"></script>
+	<script src="../../static/js/hmac-sha1.js"></script>
+	<script src="../../static/js/hmac-sha3.js"></script>
+	<script src="../../static/js/hmac-sha224.js"></script>
+	<script src="../../static/js/hmac-sha256.js"></script>
+	<script src="../../static/js/hmac-sha384.js"></script>
+	<script src="../../static/js/hmac-sha512.js"></script>
+	<script src="../../static/js/md5.js"></script>
+	<script src="../../static/js/pbkdf2.js"></script>
+	<script src="../../static/js/rabbit.js"></script>
+	<script src="../../static/js/rabbit-legacy.js"></script>
+	<script src="../../static/js/rc4.js"></script>
+	<script src="../../static/js/ripemd160.js"></script>
+	<script src="../../static/js/sha1.js"></script>
+	<script src="../../static/js/sha3.js"></script>
+	<script src="../../static/js/sha224.js"></script>
+	<script src="../../static/js/sha256.js"></script>
+	<script src="../../static/js/sha384.js"></script>
+	<script src="../../static/js/sha512.js"></script>
+	<script src="../../static/js/tripledes.js"></script>
+	<script src="../../static/js/enc-base64-min.js"></script>
+	<script src="../../static/js/enc-base64-min.js"></script>
+
+	<div class="page_header">
+		<h1>在线加密解密 <small>encode &amp; decode</small></h1>
+	</div>
+
+	<div class="alert"><span class="close">x</span><span id="msg"></span></div>
+
+	<div class="panel">
+		<div class="panel_body">
+			<form class="form_default">
+				<div class="group">
+					<label for="source" style="display: block;">加密前字符串</label>
+					<textarea id="source" name="source" rows="5"></textarea>
+				</div>
+				<div class="group" id="p_div" style="display: none;">
+					<label for="pwd">密钥</label>
+					<input type="text" id="pwd">
+				</div>
+				<div class="group">
+					<button type="button" class="btn_primary">SHA1</button>
+					<button type="button" class="btn_primary">SHA224</button>
+					<button type="button" class="btn_primary">SHA256</button>
+					<button type="button" class="btn_primary">SHA384</button>
+					<button type="button" class="btn_primary">SHA512</button>
+					<button type="button" class="btn_primary">MD5</button>
+					<button type="button" class="btn_primary">HmacSHA1</button>
+					<button type="button" class="btn_primary">HmacSHA224</button>
+					<button type="button" class="btn_primary">HmacSHA256</button>
+					<button type="button" class="btn_primary">HmacSHA384</button>
+					<button type="button" class="btn_primary">HmacSHA512</button>
+					<button type="button" class="btn_primary">HmacMD5</button>
+				</div>
+				<div class="group">
+					<button type="button" class="btn_primary">UrlEncode</button>
+					<button type="button" class="btn_danger">UrlDecode</button>&nbsp;&nbsp;
+					<button type="button" class="btn_primary">AES加密</button>
+					<button type="button" class="btn_danger">AES解密</button>&nbsp;&nbsp;
+					<button type="button" class="btn_primary">DES加密</button>
+					<button type="button" class="btn_danger">DES解密</button>&nbsp;&nbsp;
+					<button type="button" class="btn_primary">Rabbit加密</button>
+					<button type="button" class="btn_danger">Rabbit解密</button>&nbsp;&nbsp;
+					<button type="button" class="btn_primary">RC4加密</button>
+					<button type="button" class="btn_danger">RC4解密</button>&nbsp;&nbsp;
+					<button type="button" class="btn_primary">TripleDES加密</button>
+					<button type="button" class="btn_danger">TripleDES解密</button>&nbsp;&nbsp;
+					<button type="button" class="btn_primary">base64加密</button>
+					<button type="button" class="btn_danger">base64解密</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="panel">
+		<div class="panel_body">
+			<form class="form_default">
+				<div class="group">
+					<label for="result" style="display: block;">结果</label>
+					<textarea id="result" name="result" rows="5"></textarea>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		$(function () {
+			$(".btn_primary,.btn_danger").click(function () {
+				eval("hash('" + $(this).html() + "')");
+			});
+
+			$(".menu").click(function () {
+				$("#appList").slideToggle(300);
+			});
+		});
+		function hide_pwd() { $("#p_div").hide(); }
+		function show_pwd() { $("#p_div").show(); }
+
+		function hash(type) {
+			try {
+				switch (type) {
+					case "SHA1":
+						hide_pwd();
+						$("#result").val(CryptoJS.SHA1($("#source").val()));
+						break;
+					case "SHA224":
+						hide_pwd();
+						$("#result").val(CryptoJS.SHA224($("#source").val()));
+						break;
+					case "SHA256":
+						hide_pwd();
+						$("#result").val(CryptoJS.SHA256($("#source").val()));
+						break;
+					case "SHA384":
+						hide_pwd();
+						$("#result").val(CryptoJS.SHA384($("#source").val()));
+						break;
+					case "SHA512":
+						hide_pwd();
+						$("#result").val(CryptoJS.SHA512($("#source").val()));
+						break;
+					case "MD5":
+						hide_pwd();
+						$("#result").val(CryptoJS.MD5($("#source").val()));
+						break;
+					case "HmacSHA1":
+						show_pwd();
+						$("#result").val(CryptoJS.HmacSHA1($("#source").val(), $("#pwd").val()));
+						break;
+					case "HmacSHA224":
+						show_pwd();
+						$("#result").val(CryptoJS.HmacSHA224($("#source").val(), $("#pwd").val()));
+						break;
+					case "HmacSHA256":
+						show_pwd();
+						$("#result").val(CryptoJS.HmacSHA256($("#source").val(), $("#pwd").val()));
+						break;
+					case "HmacSHA384":
+						show_pwd();
+						$("#result").val(CryptoJS.HmacSHA384($("#source").val(), $("#pwd").val()));
+						break;
+					case "HmacSHA512":
+						show_pwd();
+						$("#result").val(CryptoJS.HmacSHA512($("#source").val(), $("#pwd").val()));
+						break;
+					case "HmacMD5":
+						show_pwd();
+						$("#result").val(CryptoJS.HmacMD5($("#source").val(), $("#pwd").val()));
+						break;
+					case "base64加密":
+						hide_pwd();
+						var str = CryptoJS.enc.Utf8.parse($("#source").val());
+						$("#result").val(CryptoJS.enc.Base64.stringify(str));
+						break;
+					case "base64解密":
+						hide_pwd();
+						$("#result").val(CryptoJS.enc.Base64.parse($("#source").val()).toString(CryptoJS.enc.Utf8));
+						break;
+					case "AES加密":
+						show_pwd();
+						$("#result").val(CryptoJS.AES.encrypt($("#source").val(), $("#pwd").val()));
+						break;
+					case "AES解密":
+						show_pwd();
+						$("#result").val(CryptoJS.AES.decrypt($("#source").val(), $("#pwd").val()).toString(CryptoJS.enc.Utf8));
+						break;
+					case "DES加密":
+						show_pwd();
+						$("#result").val(CryptoJS.DES.encrypt($("#source").val(), $("#pwd").val()));
+						break;
+					case "DES解密":
+						show_pwd();
+						$("#result").val(CryptoJS.DES.decrypt($("#source").val(), $("#pwd").val()).toString(CryptoJS.enc.Utf8));
+						break;
+					case "Rabbit加密":
+						show_pwd();
+						$("#result").val(CryptoJS.Rabbit.encrypt($("#source").val(), $("#pwd").val()));
+						break;
+					case "Rabbit解密":
+						show_pwd();
+						$("#result").val(CryptoJS.Rabbit.decrypt($("#source").val(), $("#pwd").val()).toString(CryptoJS.enc.Utf8));
+						break;
+					case "RC4加密":
+						show_pwd();
+						$("#result").val(CryptoJS.RC4.encrypt($("#source").val(), $("#pwd").val()));
+						break;
+					case "RC4解密":
+						show_pwd();
+						$("#result").val(CryptoJS.RC4.decrypt($("#source").val(), $("#pwd").val()).toString(CryptoJS.enc.Utf8));
+						break;
+					case "TripleDES加密":
+						show_pwd();
+						$("#result").val(CryptoJS.TripleDES.encrypt($("#source").val(), $("#pwd").val()));
+						break;
+					case "TripleDES解密":
+						show_pwd();
+						$("#result").val(CryptoJS.TripleDES.decrypt($("#source").val(), $("#pwd").val()).toString(CryptoJS.enc.Utf8));
+						break;
+					case "UrlEncode":
+						hide_pwd();
+						($.URLEncode($("#source").val()));
+						break;
+					case "UrlDecode":
+						hide_pwd();
+						$("#result").val($.URLDecode($("#source").val()));
+						break;
+				}
+			}
+			catch (err) {
+				alert(err);
+				$("#result").val("");
+			}
+		}
+	</script>
+
+	<div style="
+    color: #c0c1c4;
+    padding: 10px;
+    border-bottom: 1px solid #e1e4e6;
+    border-top: 1px solid #e1e4e6;
+    margin: 10px;
+">
+<script src="{% static "/layui/layui.js"%}"></script>
+
+
+</body>
+
+</html>

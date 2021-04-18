@@ -22,5 +22,7 @@ urlpatterns = [
     url(r'^tools/',include('toolsApp.urls',namespace='tools_app')),
     url(r'^plugin/',include('pocManageApp.urls',namespace='plugin_app')),
     url(r'^vulcheck/',include('vulCheckApp.urls',namespace='plugin_app')),
+    url(r'^decode/',include('decodeApp.urls',namespace='decode_app')),
+
 
 ]

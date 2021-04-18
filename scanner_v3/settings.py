@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'pocManageApp',
     'toolsApp',
     'vulCheckApp',
+    'decodeApp',
 )
 
 MIDDLEWARE_CLASSES = (

@@ -67,7 +67,6 @@
         $.post(url,data,function(result){
             var messList = result.data;
             console.log(messList);
-            $(".info").append("<tr><td>"+messList[i][0]+"</td><td>"+messList[i][1]+"</td></tr>");
             for(var i in messList){
                 $(".info").append("<tr><td>"+messList[i][0]+"</td><td>"+messList[i][1]+"</td></tr>");
             }

@@ -1,4 +1,5 @@
-# coding=utf-8
+#coding=utf-8
+
 #配置文件
 
 #redis配置信息

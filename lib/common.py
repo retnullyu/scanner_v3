@@ -3,12 +3,15 @@
 #Date:2018-8-23
 from socket import gethostbyname
 from urlparse import urlparse
-from config import *
+from config.config import *
 import ping
 import random,requests,re,os
 #公共函数模块
 
 #将url处理成标准形式 http://www.xxx.xx
+from config.config import User_Agents
+
+
 def init_url(url):
     if not url.startswith('http') and not url.startswith('https'):
         url = 'http://'+url
