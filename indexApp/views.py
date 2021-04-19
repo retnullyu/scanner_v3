@@ -2,6 +2,7 @@
 from django.shortcuts import render
 from django.http import *
 from models import *
+import psutil
 from . import loginJudge
 from pocManageApp.models import Plugin_db
 
@@ -32,7 +33,12 @@ def mainIndex(request):
 @loginJudge.login
 def mainShow(request):
     plu_count = Plugin_db.objects.count()
-    return render(request,'index_app/main.html',{'plu_count':plu_count})
+    cpu_using_rate = psutil.cpu_percent()
+    mem = psutil.virtual_memory()
+    pid_load = str((mem.free / 1024 / 1024 /1024))
+
+
+    return render(request,'index_app/main.html',{'plu_count':plu_count,'pro_count':cpu_using_rate,"work_count":pid_load})
 
 
 #退出登录视图
