@@ -3,7 +3,7 @@ requests==2.19.1
 dnspython==1.15.0
 pocsuite==2.0.7
 wheel==0.31.1
-django==1.8.2
+django==2.2.27
 redis==2.10.6
 celery==5.2.2
 ping==0.2
